@@ -1,9 +1,10 @@
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -35,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.MysqlDatabase = void 0;
 var mysql = require("mysql");
 var lodash_1 = require("lodash");
 var url_1 = require("url");
@@ -42,7 +44,7 @@ var MysqlDatabase = /** @class */ (function () {
     function MysqlDatabase(connectionString) {
         this.connectionString = connectionString;
         this.db = mysql.createConnection(connectionString);
-        var url = url_1.parse(connectionString, true);
+        var url = (0, url_1.parse)(connectionString, true);
         if (url && url.pathname) {
             var database = url.pathname.substr(1);
             this.defaultSchema = database;
@@ -55,7 +57,7 @@ var MysqlDatabase = /** @class */ (function () {
     MysqlDatabase.mapTableDefinitionToType = function (tableDefinition, customTypes, options) {
         if (!options)
             throw new Error();
-        return lodash_1.mapValues(tableDefinition, function (column) {
+        return (0, lodash_1.mapValues)(tableDefinition, function (column) {
             switch (column.udtName) {
                 case 'char':
                 case 'varchar':
@@ -147,7 +149,7 @@ var MysqlDatabase = /** @class */ (function () {
                         rawEnumRecords.forEach(function (enumItem) {
                             var enumName = MysqlDatabase.getEnumNameFromColumn(enumItem.data_type, enumItem.column_name);
                             var enumValues = MysqlDatabase.parseMysqlEnumeration(enumItem.column_type);
-                            if (enums[enumName] && !lodash_1.isEqual(enums[enumName], enumValues)) {
+                            if (enums[enumName] && !(0, lodash_1.isEqual)(enums[enumName], enumValues)) {
                                 var errorMsg = "Multiple enums with the same name and contradicting types were found: " +
                                     (enumItem.column_name + ": " + JSON.stringify(enums[enumName]) + " and " + JSON.stringify(enumValues));
                                 throw new Error(errorMsg);
@@ -192,7 +194,7 @@ var MysqlDatabase = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.getEnumTypes(tableSchema)];
                     case 1:
                         enumTypes = _c.sent();
-                        customTypes = lodash_1.keys(enumTypes);
+                        customTypes = (0, lodash_1.keys)(enumTypes);
                         _b = (_a = MysqlDatabase).mapTableDefinitionToType;
                         return [4 /*yield*/, this.getTableDefinition(tableName, tableSchema)];
                     case 2: return [2 /*return*/, _b.apply(_a, [_c.sent(), customTypes, options])];

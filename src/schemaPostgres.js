@@ -1,9 +1,10 @@
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -35,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.PostgresDatabase = void 0;
 var PgPromise = require("pg-promise");
 var lodash_1 = require("lodash");
 var lodash_2 = require("lodash");
@@ -45,7 +47,7 @@ var PostgresDatabase = /** @class */ (function () {
         this.db = pgp(connectionString);
     }
     PostgresDatabase.mapTableDefinitionToType = function (tableDefinition, customTypes, options) {
-        return lodash_1.mapValues(tableDefinition, function (column) {
+        return (0, lodash_1.mapValues)(tableDefinition, function (column) {
             switch (column.udtName) {
                 case 'bpchar':
                 case 'char':
@@ -185,7 +187,7 @@ var PostgresDatabase = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.getEnumTypes()];
                     case 1:
                         enumTypes = _c.sent();
-                        customTypes = lodash_2.keys(enumTypes);
+                        customTypes = (0, lodash_2.keys)(enumTypes);
                         _b = (_a = PostgresDatabase).mapTableDefinitionToType;
                         return [4 /*yield*/, this.getTableDefinition(tableName, tableSchema)];
                     case 2: return [2 /*return*/, _b.apply(_a, [_c.sent(), customTypes, options])];

@@ -4,10 +4,11 @@
  * Created by xiamx on 2016-08-10.
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -39,6 +40,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Options = exports.getDatabase = exports.typescriptOfSchema = exports.typescriptOfTable = void 0;
 var typescript_1 = require("./typescript");
 var schema_1 = require("./schema");
 var options_1 = require("./options");
@@ -78,14 +80,14 @@ function typescriptOfTable(db, table, schema, options) {
             switch (_a.label) {
                 case 0:
                     if (typeof db === 'string') {
-                        db = schema_1.getDatabase(db);
+                        db = (0, schema_1.getDatabase)(db);
                     }
                     interfaces = '';
                     return [4 /*yield*/, db.getTableTypes(table, schema, options)];
                 case 1:
                     tableTypes = _a.sent();
-                    interfaces += typescript_1.generateTableTypes(table, tableTypes, options);
-                    interfaces += typescript_1.generateTableInterface(table, tableTypes, options);
+                    interfaces += (0, typescript_1.generateTableTypes)(table, tableTypes, options);
+                    interfaces += (0, typescript_1.generateTableInterface)(table, tableTypes, options);
                     return [2 /*return*/, interfaces];
             }
         });
@@ -102,7 +104,7 @@ function typescriptOfSchema(db, tables, schema, options) {
             switch (_b.label) {
                 case 0:
                     if (typeof db === 'string') {
-                        db = schema_1.getDatabase(db);
+                        db = (0, schema_1.getDatabase)(db);
                     }
                     if (!schema) {
                         schema = db.getDefaultSchema();
@@ -142,7 +144,7 @@ function typescriptOfSchema(db, tables, schema, options) {
                         vscodeFile: null,
                         tsfmtFile: null
                     };
-                    return [4 /*yield*/, typescript_formatter_1.processString('schema.ts', output, formatterOption)];
+                    return [4 /*yield*/, (0, typescript_formatter_1.processString)('schema.ts', output, formatterOption)];
                 case 5:
                     processedResult = _b.sent();
                     return [2 /*return*/, processedResult.dest];
@@ -152,5 +154,5 @@ function typescriptOfSchema(db, tables, schema, options) {
 }
 exports.typescriptOfSchema = typescriptOfSchema;
 var schema_2 = require("./schema");
-exports.getDatabase = schema_2.getDatabase;
+Object.defineProperty(exports, "getDatabase", { enumerable: true, get: function () { return schema_2.getDatabase; } });
 //# sourceMappingURL=index.js.map

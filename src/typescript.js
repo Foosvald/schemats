@@ -4,6 +4,7 @@
  * Created by xiamx on 2016-08-10.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.generateTableTypes = exports.generateEnumType = exports.generateTableInterface = void 0;
 function nameIsReservedKeyword(name) {
     var reservedKeywords = [
         'string',

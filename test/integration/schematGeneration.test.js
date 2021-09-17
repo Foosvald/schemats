@@ -1,9 +1,10 @@
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -34,7 +35,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var assert = require("power-assert");
 var index_1 = require("../../src/index");
@@ -50,8 +50,8 @@ describe('schemat generation integration testing', function () {
                             if (!process.env.POSTGRES_URL) {
                                 return [2 /*return*/, this.skip()];
                             }
-                            db = index_1.getDatabase(process.env.POSTGRES_URL);
-                            return [4 /*yield*/, testUtility_1.loadSchema(db, './test/fixture/postgres/initCleanup.sql')];
+                            db = (0, index_1.getDatabase)(process.env.POSTGRES_URL);
+                            return [4 /*yield*/, (0, testUtility_1.loadSchema)(db, './test/fixture/postgres/initCleanup.sql')];
                         case 1:
                             _a.sent();
                             return [2 /*return*/];
@@ -59,7 +59,7 @@ describe('schemat generation integration testing', function () {
                 });
             });
         });
-        it('Basic generation', function () { return __awaiter(_this, void 0, void 0, function () {
+        it('Basic generation', function () { return __awaiter(void 0, void 0, void 0, function () {
             var inputSQLFile, outputFile, expectedFile, config, _a;
             return __generator(this, function (_b) {
                 switch (_b.label) {
@@ -68,16 +68,16 @@ describe('schemat generation integration testing', function () {
                         outputFile = './test/actual/postgres/osm.ts';
                         expectedFile = './test/expected/postgres/osm.ts';
                         config = './fixture/postgres/osm.json';
-                        return [4 /*yield*/, testUtility_1.writeTsFile(inputSQLFile, config, outputFile, db)];
+                        return [4 /*yield*/, (0, testUtility_1.writeTsFile)(inputSQLFile, config, outputFile, db)];
                     case 1:
                         _b.sent();
                         _a = assert;
-                        return [4 /*yield*/, testUtility_1.compare(expectedFile, outputFile)];
+                        return [4 /*yield*/, (0, testUtility_1.compare)(expectedFile, outputFile)];
                     case 2: return [2 /*return*/, _a.apply(void 0, [_b.sent()])];
                 }
             });
         }); });
-        it('Camelcase generation', function () { return __awaiter(_this, void 0, void 0, function () {
+        it('Camelcase generation', function () { return __awaiter(void 0, void 0, void 0, function () {
             var inputSQLFile, outputFile, expectedFile, config, _a;
             return __generator(this, function (_b) {
                 switch (_b.label) {
@@ -86,11 +86,11 @@ describe('schemat generation integration testing', function () {
                         outputFile = './test/actual/postgres/osm-camelcase.ts';
                         expectedFile = './test/expected/postgres/osm-camelcase.ts';
                         config = './fixture/postgres/osm-camelcase.json';
-                        return [4 /*yield*/, testUtility_1.writeTsFile(inputSQLFile, config, outputFile, db)];
+                        return [4 /*yield*/, (0, testUtility_1.writeTsFile)(inputSQLFile, config, outputFile, db)];
                     case 1:
                         _b.sent();
                         _a = assert;
-                        return [4 /*yield*/, testUtility_1.compare(expectedFile, outputFile)];
+                        return [4 /*yield*/, (0, testUtility_1.compare)(expectedFile, outputFile)];
                     case 2: return [2 /*return*/, _a.apply(void 0, [_b.sent()])];
                 }
             });
@@ -106,8 +106,8 @@ describe('schemat generation integration testing', function () {
                             if (!process.env.MYSQL_URL) {
                                 return [2 /*return*/, this.skip()];
                             }
-                            db = index_1.getDatabase(process.env.MYSQL_URL + "?multipleStatements=true");
-                            return [4 /*yield*/, testUtility_1.loadSchema(db, './test/fixture/mysql/initCleanup.sql')];
+                            db = (0, index_1.getDatabase)(process.env.MYSQL_URL + "?multipleStatements=true");
+                            return [4 /*yield*/, (0, testUtility_1.loadSchema)(db, './test/fixture/mysql/initCleanup.sql')];
                         case 1:
                             _a.sent();
                             return [2 /*return*/];
@@ -115,7 +115,7 @@ describe('schemat generation integration testing', function () {
                 });
             });
         });
-        it('Basic generation', function () { return __awaiter(_this, void 0, void 0, function () {
+        it('Basic generation', function () { return __awaiter(void 0, void 0, void 0, function () {
             var inputSQLFile, outputFile, expectedFile, config, _a;
             return __generator(this, function (_b) {
                 switch (_b.label) {
@@ -124,16 +124,16 @@ describe('schemat generation integration testing', function () {
                         outputFile = './test/actual/mysql/osm.ts';
                         expectedFile = './test/expected/mysql/osm.ts';
                         config = './fixture/mysql/osm.json';
-                        return [4 /*yield*/, testUtility_1.writeTsFile(inputSQLFile, config, outputFile, db)];
+                        return [4 /*yield*/, (0, testUtility_1.writeTsFile)(inputSQLFile, config, outputFile, db)];
                     case 1:
                         _b.sent();
                         _a = assert;
-                        return [4 /*yield*/, testUtility_1.compare(expectedFile, outputFile)];
+                        return [4 /*yield*/, (0, testUtility_1.compare)(expectedFile, outputFile)];
                     case 2: return [2 /*return*/, _a.apply(void 0, [_b.sent()])];
                 }
             });
         }); });
-        it('Enum conflict in columns', function () { return __awaiter(_this, void 0, void 0, function () {
+        it('Enum conflict in columns', function () { return __awaiter(void 0, void 0, void 0, function () {
             var inputSQLFile, outputFile, config, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -144,7 +144,7 @@ describe('schemat generation integration testing', function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, testUtility_1.writeTsFile(inputSQLFile, config, outputFile, db)];
+                        return [4 /*yield*/, (0, testUtility_1.writeTsFile)(inputSQLFile, config, outputFile, db)];
                     case 2:
                         _a.sent();
                         return [3 /*break*/, 4];

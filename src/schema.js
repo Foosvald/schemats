@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getDatabase = void 0;
 var schemaPostgres_1 = require("./schemaPostgres");
 var schemaMysql_1 = require("./schemaMysql");
 var SQLVersion;
